@@ -353,6 +353,24 @@ textarea{width:100%;border:1.5px solid var(--ink);border-radius:3px;padding:8px;
 .phone{height:700px}
 .stu{min-height:86px}
 
+/* ============ معالجة الملاحظات: مهمة البيت، هدف الفصل، الملصقات، المؤشرات ============ */
+.goal{padding:9px 12px}.goal b{font-size:13.5px}.goal .gn{font:800 15px var(--display);color:var(--primary)}.goal.hit{border-color:var(--primary);background:var(--primary-soft)}
+.hq{display:flex;gap:10px;align-items:center;border:2px dashed var(--primary)}.hq.done{border-style:solid;background:var(--primary-soft)}
+.q2{width:40px;height:40px;border-radius:999px;border:2.5px dashed var(--primary);color:var(--primary);display:grid;place-items:center;flex:none}.hq.done .q2{border-style:solid;background:var(--primary);color:#fff}
+.album{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:6px}.album span{aspect-ratio:1;border-radius:999px;border:2px dashed var(--line-strong);display:grid}.album span.on{border:0}.album svg{width:100%;height:100%}
+.eps{display:flex;flex-direction:column;gap:4px;margin-top:6px}.eps div{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--muted)}.eps div.on{color:var(--ink);font-size:15.5px;line-height:1.8}
+.eps b{width:22px;height:22px;border-radius:999px;border:1.5px solid currentColor;display:grid;place-items:center;font-size:11px;flex:none}
+.stkbig{width:120px;height:120px}.stkbig svg{width:100%;height:100%}
+.imap{display:grid;grid-template-columns:24px minmax(0,1.1fr) minmax(40px,1fr) 62px;gap:8px;align-items:center;font-size:13px;margin-top:6px}
+.imap b{width:22px;height:22px;border-radius:999px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:11px}
+.imap .trk{height:10px;border-radius:999px;background:var(--primary-soft);overflow:hidden}.imap .v{text-align:end;font-weight:800;font-variant-numeric:tabular-nums}
+.imap.zero{color:var(--muted)}.imap.zero b{background:var(--line-strong)}.imap.zero .v{font-size:11.5px;color:var(--danger)}
+.gap2{display:flex;flex-direction:column;gap:6px;margin-top:6px;font-size:13.5px}.gap2 div{display:flex;gap:10px;align-items:center}.gap2 b{font:800 24px var(--display);color:var(--primary);min-width:74px}
+.prepost{display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:13.5px}.prepost div{display:grid;grid-template-columns:54px 1fr 92px;gap:8px;align-items:center}
+.prepost .trk{height:12px;border-radius:999px;background:var(--primary-soft);overflow:hidden}.prepost .pend .trk{border:2px dashed var(--line-strong);background:transparent}.prepost b{text-align:end;font-size:12.5px}
+
+.goal .trk{border-radius:999px;background:var(--primary-soft);overflow:hidden}
+
 </style>
 <div id="hero"></div>
 <div class="wrap" id="app">
@@ -429,6 +447,13 @@ var CLASSES=[["الأول / أ",22,25],["الأول / ب",17,25],["الثاني 
 var ENTS=[{n:"مدارس النخبة الأهلية — بنين",k:"مدرسة",v:318,t:450,val:"الأمانة",w:[9,11,12,14],staff:"٢٠ معلمًا",go:1},{n:"مدارس النخبة الأهلية — بنات",k:"مدرسة",v:297,t:420,val:"الأمانة",w:[10,10,12,13],staff:"١٨ معلمة"},{n:"مجمع الفرقان القرآني",k:"مجمع قرآني",v:39,t:48,val:"المحافظة على الصلاة",w:[2,3,3,4],staff:"٥ محفّظين"}];
 var HOUSES=[["بيت الإتقان",142,"var(--sky)"],["بيت التعاون",138,"var(--coral)"],["بيت الأمانة",130,"var(--grass)",1],["بيت العطاء",97,"var(--purple)"]];
 var STORE=[{k:"cap",n:"قبعة",p:2},{k:"glasses",n:"نظارة",p:3},{k:"headphones",n:"سماعات",p:4}];
+var IND_OF={"003":1,"011":7,"049":2,"045":2,"001":1,"048":5,"044":3,"052":3,"057":2,"038":2,"019":2,"054":1,"004":1};
+var INDN=["يردّ ما يجده","يعيد ما استعاره سليمًا","يؤدي المال المؤتمن","يصون السر المباح","يؤدي المهمة كما كُلِّف","ينسب العمل لأصحابه","يعمل بنفسه دون غش","يستأذن قبل الاستعمال"];
+var HOMEQ={plain:"يعيد باقي النقود كاملًا بعد الشراء",t:"أَعِدْ بَاقِيَ النُّقُودِ كَامِلًا بَعْدَ الشِّرَاءِ.",ts:"أَعَدْتَ بَاقِيَ النُّقُودِ كَامِلًا",ph:PHR.m3};
+var EPIS=["وَجَدَ نُغَير خَرَزَةً لَامِعَةً قُرْبَ عُشِّهِ.","قَالَ نُغَير: مَا أَجْمَلَهَا! لَكِنَّهَا لَيْسَتْ لِي.","سَأَلَ الْعُصْفُورَ وَالنَّحْلَةَ: لِمَنْ هَذِهِ الْخَرَزَةُ؟","قَالَتِ النَّحْلَةُ: رَأَيْتُ السِّنْجَابَ يَبْحَثُ عَنْ شَيْءٍ.","طَارَ نُغَير إِلَى شَجَرَةِ السِّنْجَابِ الْبَعِيدَةِ.","فَرِحَ السِّنْجَابُ وَقَالَ: هَذِهِ خَرَزَةُ أُمِّي!","صَارَ السِّنْجَابُ يَأْتَمِنُ نُغَير عَلَى جَوْزِهِ كُلَّ شِتَاءٍ."];
+function stk(c,d){return '<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#fff" stroke="#1B2733" stroke-width="2.5"/><g fill="'+c+'" stroke="#1B2733" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">'+d+'</g></svg>'}
+var STK=[stk("var(--purple)",'<rect x="13" y="14" width="22" height="20" rx="3"/><path d="M24 14v20" fill="none"/>'),stk("var(--coral)",'<circle cx="24" cy="24" r="10"/><path d="M16 19q8 5 16 0M16 29q8-5 16 0" fill="none"/>'),stk("var(--sky)",'<rect x="19" y="17" width="10" height="18" rx="4"/><rect x="21" y="12" width="6" height="5" rx="1.5"/>'),stk("var(--grass)",'<circle cx="24" cy="19" r="9"/><rect x="22" y="27" width="4" height="9" rx="1" fill="var(--wood)"/>'),stk("var(--sand)",'<path d="M14 34l4-14 12-8 6 6-8 12z"/><path d="M14 34l6-6" fill="none"/>'),stk("var(--wood)",'<path d="M14 20h20l-3 15H17z"/><path d="M16 20q8-12 16 0" fill="none"/>'),stk("var(--sky)",'<path d="M34 12c-12 2-18 10-20 24 10-2 18-8 20-24z"/><path d="M14 36l12-14" fill="none"/>')];
+var FUNNEL=[430,402,371,344,287,240,212];
 var LEVELS=["تعرّف","تمييز","اقتناع","ممارسة","تمكّن"];
 
 /* ============ الحالة ============ */
@@ -438,11 +463,13 @@ function fresh(){S={view:"home",places:{CLASS:1,YARD:1,CANTEEN:1,LIBRARY:1,LAB:0
  tTab:"grid",offline:false,queue:[],nudge:false,sheet:false,devLv:1,devPick:0,toast:null,undoT:null,
  lit:1,sTab:"home",logged:false,loginN:0,station:0,done:{},questOpen:false,questDone:false,days:false,act:null,celebrate:null,cert:null,journeyDone:false,gems:5,owned:{},wear:"none",popStamp:false,
  pTab:"today",parentQ:[],parentSel:null,parentSent:false,review:false,
- honor:0,dism:{},report:false,refer:{},seen:{},base:31,placeCount:{CLASS:12,YARD:9,CANTEEN:6,LIBRARY:4,LAB:0,BUS:0}};
+ honor:0,dism:{},report:false,refer:{},seen:{},goal:{target:25,reward:"نشاط حر في الفناء",given:false,hit:null},stickers:[],episode:null,pendingCert:false,homeQ:0,indc:[9,6,4,0,3,1,5,0],base:31,placeCount:{CLASS:12,YARD:9,CANTEEN:6,LIBRARY:4,LAB:0,BUS:0}};
  NAMES.forEach(function(n,i){S.stamps[i]=[3,1,2,0,4,1,2,0,3,1,0,2][i]})}
 fresh();
 function places(){return ALLPLACES.filter(function(p){return S.places[p.k]})}
 function total(){return S.base+S.obs.reduce(function(s,o){return s+o.ids.length},0)}
+function classTotal(){var t=0;for(var k in S.stamps)t+=S.stamps[k];return t}
+function checkGoal(){if(!S.goal.hit&&classTotal()>=S.goal.target)S.goal.hit={fresh:true}}
 function mineN(){return S.obs.reduce(function(s,o){return s+o.ids.length},0)}
 function fahdObs(){return S.obs.filter(function(o){return o.ids.indexOf(0)>=0})}
 function speak(t){try{var u=new SpeechSynthesisUtterance(t);u.lang="ar-SA";u.rate=.9;window.speechSynthesis.cancel();window.speechSynthesis.speak(u)}catch(e){}}
@@ -492,9 +519,11 @@ function teacherPhone(){
  else if(S.tTab==="report"){pbar.hidden=true;var wait=NAMES.map(function(n,i){return i}).filter(function(i){return S.stamps[i]===0});
   var pa=el('<div class="paper" style="padding:12px 14px"><div style="font:800 17px var(--display);color:var(--primary)">الأول الابتدائي / أ · قيمة الأمانة</div><div id="rows"></div></div>');
   NAMES.forEach(function(n,i){var d="";for(var k=0;k<Math.min(S.stamps[i],6);k++)d+='<i class="dotst"></i>';pa.querySelector("#rows").appendChild(el('<div class="rrow"><b>'+esc(n)+'</b><span>'+(d||'<small>ينتظر التفاتة</small>')+'</span><span>'+ar(S.stamps[i])+'</span></div>'))});tb.appendChild(pa);
+  tb.appendChild(indMap(S.indc,'خريطة مؤشرات الأمانة في فصلي'));
   var pr=el('<button class="btn ghost">'+ICON.print+' طباعة ومشاركة</button>');pr.style.cssText="display:flex;gap:8px;justify-content:center;align-items:center";tb.appendChild(pr);
   if(wait.length){var w=el('<button class="btn">اختر من ينتظرون التفاتة ('+ar(wait.length)+')</button>');w.onclick=function(){S.sel={};wait.forEach(function(i){S.sel[i]=1});S.tTab="grid";draw()};tb.appendChild(w)}}
  else{
+  tb.appendChild(goalBar(true));
   if(S.nudge)tb.appendChild(el('<div class="nudge rise">'+ICON.eye+'<span>بندر باسل وطلال بدر ينتظران التفاتة هذا الأسبوع</span></div>'));
   var row1=el('<div class="chips"></div>');pls.forEach(function(pl){var c=el('<button class="chip" aria-pressed="'+(S.place===pl.k)+'">'+pl.n+'</button>');c.onclick=function(){S.place=pl.k;draw()};row1.appendChild(c)});
   var all=el('<button class="chip all">'+(selN===12?"إلغاء الكل":"الكل")+'</button>');all.onclick=function(){if(selN===12)S.sel={};else NAMES.forEach(function(n,i){S.sel[i]=1});draw()};row1.appendChild(all);tb.appendChild(row1);
@@ -512,9 +541,9 @@ function teacherPhone(){
   sh.querySelector("#sv").onclick=function(){var d=DEVP[S.devPick];Object.keys(S.sel).forEach(function(i){i=+i;S.dev[i]=(S.dev[i]||0)+1;S.devNotes.unshift({i:i,code:d[0],t:d[1],note:"رصدها المعلم في "+ALLPLACES.filter(function(x){return x.k===S.place})[0].n,lv:S.devLv,by:"أ. محمد العتيبي",fix:d[2],fresh:1})});S.sel={};S.sheet=false;S.toast={msg:"حُفظت الملاحظة",sub:"وصلت إلى المرشد الطلابي وحده",at:Date.now()};clearTimeout(S.undoT);S.undoT=setTimeout(function(){S.toast=null;draw()},5000);draw()};
   sh.querySelector("#cn").onclick=function(){S.sheet=false;draw()}}
  return p}
-function applyObs(pr,ids,place){S.obs.push({pr:pr,ids:ids,place:place});ids.forEach(function(i){S.stamps[i]++});S.placeCount[place]+=ids.length;
+function applyObs(pr,ids,place){S.obs.push({pr:pr,ids:ids,place:place});ids.forEach(function(i){S.stamps[i]++});S.placeCount[place]+=ids.length;var ix=IND_OF[pr.code.slice(-3)];if(ix)S.indc[ix-1]+=ids.length;checkGoal();
  if(ids.indexOf(0)<0)return null;S.gems++;var cel={ts:pr.ts,ph:pr.ph[S.lit],quest:false,fresh:true};
- if(pr.code===QUEST_CODE&&S.questOpen&&!S.questDone){S.questDone=true;S.done[4]=1;S.station=5;cel.quest=true}return cel}
+ if(pr.code===QUEST_CODE&&S.questOpen&&!S.questDone){S.questDone=true;S.done[4]=1;S.station=5;cel.quest=true;S.stickers.push(4)}return cel}
 function observe(pr,rect){var ids=Object.keys(S.sel).map(Number);if(!ids.length)return;var n=ids.length,cnt=n>2?ar(n)+" طلاب":n===2?"طالبين":"طالب";S.sel={};
  clearTimeout(S.undoT);S.undoT=setTimeout(function(){S.toast=null;draw()},9000);
  if(S.offline){S.queue.push({pr:pr,ids:ids,place:S.place});S.toast={msg:"حُفظت «"+pr.t+"» لـ"+cnt,sub:"في الطابور حتى يعود الاتصال",at:Date.now()};draw();return}
@@ -527,6 +556,14 @@ function observe(pr,rect){var ids=Object.keys(S.sel).map(Number);if(!ids.length)
 function flush(){var cel=null,n=0;S.queue.forEach(function(q){var c=applyObs(q.pr,q.ids,q.place);if(c)cel=c;n+=q.ids.length});if(!S.queue.length)return;S.queue=[];S.celebrate=cel;
  S.toast={msg:"عاد الاتصال",sub:"أُرسلت "+ar(n)+" رصدات من الطابور",at:Date.now()};clearTimeout(S.undoT);S.undoT=setTimeout(function(){S.toast=null;draw()},6000)}
 function undo(){var r=S.obs.pop();if(!r)return;r.ids.forEach(function(i){S.stamps[i]--});S.placeCount[r.place]-=r.ids.length;if(r.ids.indexOf(0)>=0)S.gems--;S.toast=null;S.celebrate=null;clearTimeout(S.undoT);draw()}
+
+/* ============ هدف الفصل وخريطة المؤشرات ============ */
+function goalBar(teacher){var t=classTotal(),g=S.goal,pct=Math.min(100,Math.round(t/g.target*100)),hit=t>=g.target;
+ var c=el('<div class="card goal'+(hit?' hit':'')+'"><div style="display:flex;gap:8px;align-items:center">'+ICON.team+(S.lit===0&&!teacher?'':'<b>هدف الفصل</b><span class="note" style="flex:1">'+g.reward+'</span>')+'<b class="gn">'+ar(Math.min(t,g.target))+' من '+ar(g.target)+'</b></div><div class="trk" style="height:12px;margin-top:6px"><span style="display:block;height:100%;border-radius:999px;background:var(--primary);width:'+pct+'%;transition:width .6s cubic-bezier(.2,.8,.2,1)"></span></div></div>');
+ if(teacher&&hit){if(g.given)c.appendChild(el('<div class="flag" style="margin-top:6px">'+ICON.check+' سُلّمت المكافأة</div>'));else{var b=el('<button class="btn" style="margin-top:6px;padding:7px 12px;width:100%">بلغ الفصل هدفه · سلّمتُ المكافأة</button>');b.onclick=function(){g.given=true;draw()};c.appendChild(b)}}
+ return c}
+function indMap(counts,title){var mx=Math.max.apply(null,counts)||1;
+ return el('<div class="card"><div class="lab">'+title+'</div>'+INDN.map(function(n,i){var v=counts[i];return '<div class="imap'+(v?'':' zero')+'"><b>'+ar(i+1)+'</b><span>'+n+'</span><span class="trk"><span class="bar-fill" style="display:block;width:'+Math.max(v?8:0,Math.round(v/mx*100))+'%;animation-delay:'+(i*0.05)+'s"></span></span><span class="v">'+(v?ar(v):'لم يُرصد')+'</span></div>'}).join("")+'</div>')}
 
 /* ============ جوال الطالب ============ */
 function stampRow(n,pop){var s="",m=Math.min(n,6);for(var i=0;i<m;i++)s+='<span class="stamp sm'+(pop&&i===m-1?' pop-in':'')+'"></span>';return s}
@@ -546,6 +583,13 @@ function studentPhone(needLogin){
  if(S.celebrate){var c0=S.celebrate,fr=c0.fresh;c0.fresh=false;
   var o=el('<div class="overlay"'+(fr?'':' style="animation:none"')+'><div style="position:relative"><div class="stamp live'+(fr?' land':'')+'"><b>أَحْسَنْتَ</b></div>'+(fr?'<i class="inkring"></i>':'')+'</div>'+(S.lit===0?'':'<div class="c1 '+(fr?'up d1':'')+'" style="font-size:22px;font-weight:700">'+c0.ts+'</div><div class="c1 '+(fr?'up d2':'')+'" style="color:var(--muted);font-size:16px">'+c0.ph+'</div>')+(c0.quest?'<div class="flag '+(fr?'up d2':'')+'">'+(S.lit===0?ICON.hand:'أكملتَ مهمتك الواقعية · المحطة ٥')+'</div>':'')+'<div class="'+(fr?'up d3':'')+'" style="display:flex;gap:12px;align-items:center"><img class="hop" src="'+NUG.celebrate+'" alt="نُغَير يحتفل"><button class="spk" aria-label="استمع">'+ICON.spk+'</button><button class="btn rnd" id="okc" aria-label="تم">'+ICON.check+'</button></div></div>');
   ph.appendChild(o);if(fr)fx(function(){burst(o,22)});o.querySelector(".spk").onclick=function(){speak(c0.ts+". "+c0.ph)};o.querySelector("#okc").onclick=function(){S.celebrate=null;S.popStamp=true;draw()}}
+ else if(S.episode){var ep=S.episode,fe=ep.fresh;ep.fresh=false;
+  var eo=el('<div class="overlay"'+(fe?'':' style="animation:none"')+'><div class="stkbig'+(fe?' pop-in':'')+'">'+STK[ep.n]+'</div>'+(S.lit===0?'':'<div class="lab '+(fe?'up d1':'')+'">ملصق جديد · حكاية نُغَير '+ar(ep.n+1)+' من ٧</div>')+'<div class="mentor '+(fe?'up d2':'')+'" style="align-self:stretch"><img src="'+NUG.happy+'" alt="نُغَير">'+(S.lit===0?'<button class="spk say big" data-say="'+esc(EPIS[ep.n])+'">'+ICON.spk+'</button>':'<div class="bubble c1" style="font-size:17px">'+EPIS[ep.n]+'</div>')+'</div>'+(S.lit===0||ep.n===6?'':'<div class="note '+(fe?'up d3':'')+'">تكملة الحكاية مع المحطة القادمة</div>')+'<button class="btn rnd" id="okc" aria-label="تم">'+ICON.check+'</button></div>');
+  ph.appendChild(eo);if(fe)fx(function(){burst(eo,12)});[].forEach.call(eo.querySelectorAll(".say"),function(x){x.onclick=function(){speak(x.getAttribute("data-say"))}});
+  eo.querySelector("#okc").onclick=function(){S.episode=null;if(S.pendingCert){S.pendingCert=false;S.cert={fresh:true}}draw()}}
+ else if(S.goal.hit&&S.goal.hit.fresh&&S.sTab==="home"){S.goal.hit.fresh=false;
+  var go2=el('<div class="overlay"><div class="stkbig pop-in" style="background:var(--primary);color:#fff;border-radius:999px;display:grid;place-items:center">'+ICON.team+'</div>'+(S.lit===0?'':'<div class="c1 up d1" style="font-size:22px;font-weight:700">بلغ فصلك هدفه</div><div class="c1 up d2" style="color:var(--muted);font-size:16px">'+ar(S.goal.target)+' ختمًا معًا · '+S.goal.reward+'</div>')+'<img class="hop" src="'+NUG.celebrate+'" alt="نُغَير يحتفل"><button class="btn rnd" id="okc" aria-label="تم">'+ICON.check+'</button></div>');
+  ph.appendChild(go2);fx(function(){burst(go2,26)});go2.querySelector("#okc").onclick=function(){draw()}}
  else if(S.cert){var fr2=S.cert.fresh;S.cert.fresh=false;
   var ce=el('<div class="overlay"'+(fr2?'':' style="animation:none"')+'><div class="paper cert'+(fr2?'':' still')+'"><div class="lab">مدارس النخبة الأهلية</div><div style="font:800 26px var(--display);color:var(--primary)">أتممتَ مسار الأمانة</div><img src="'+AV.cheer+'" alt="" style="width:120px;height:120px"><div style="font:800 20px var(--display)">فهد أحمد</div><div class="badges" style="justify-content:center"><span class="bdg on">'+ICON.check+'شارة الأمين</span><span class="bdg on">'+ICON.gem+'+٥</span></div><div class="stamp live'+(fr2?' land':'')+'" style="margin:8px auto 0"><b>أَحْسَنْتَ</b></div></div><button class="btn rnd" id="okc" aria-label="تم">'+ICON.check+'</button></div>');
   ph.appendChild(ce);if(fr2)fx(function(){burst(ce,30)});ce.querySelector("#okc").onclick=function(){S.cert=null;S.sTab="me";draw()}}
@@ -563,6 +607,8 @@ function homeTab(b){var fo=fahdObs(),last=fo[fo.length-1];
  var tiles=el('<div class="tiles"></div>'),np=places().length;tiles.style.gridTemplateColumns='repeat('+(np===4||np===2?2:3)+',1fr)';places().forEach(function(t){tiles.appendChild(el('<div class="tile'+(t.dark?' dark':'')+'" style="background:'+t.c+'">'+(t.k==="YARD"&&S.questOpen&&!S.questDone?'<span class="q">'+ICON.hand+'</span>':'')+(S.lit===0?'':t.n)+'</div>'))});b.appendChild(tiles);
  if(last){var c=el('<div class="card today rise"><div class="stamp live"><b>أَحْسَنْتَ</b></div><div style="min-width:0;flex:1">'+(S.lit===0?'':'<div class="lab">رصدة اليوم · رآها معلمك</div><div class="c1">'+last.pr.ts+'</div>')+'</div><button class="spk say" data-say="'+esc(last.pr.ts)+'" aria-label="استمع">'+ICON.spk+'</button></div>');b.appendChild(c)}
  else b.appendChild(el('<div class="card today"><div class="stamp empty"></div><div style="flex:1">'+(S.lit===0?'':'<div class="c1" style="font-size:16px;color:var(--muted)">ختم اليوم لم يصل بعد</div><div class="note">يصل حين يرى معلمك منك ممارسة</div>')+'</div><img src="'+NUG.happy+'" alt="نُغَير" style="width:64px;height:64px;flex:none"></div>'));
+ if(S.homeQ)b.appendChild(el('<div class="card hq'+(S.homeQ===2?' done':' rise')+'"><span class="q2">'+(S.homeQ===2?ICON.check:ICON.hand)+'</span><div style="flex:1;min-width:0">'+(S.lit===0?'':'<div class="lab">مهمة البيت'+(S.homeQ===2?' · رآها أهلك':' · تكتمل حين يراها أهلك')+'</div><div class="c1" style="font-size:16px">'+HOMEQ.t+'</div>')+'</div><button class="spk say" data-say="'+esc(HOMEQ.t)+'" aria-label="استمع">'+ICON.spk+'</button></div>'));
+ b.appendChild(goalBar(false));
  b.appendChild(el('<div class="card count">'+(S.lit===0?'':'<span class="lab">أختامي</span>')+stampRow(S.stamps[0],S.popStamp)+'<span class="n'+(S.popStamp?' pop-in':'')+'">'+ar(S.stamps[0])+'</span></div>'));S.popStamp=false;
  var g=el('<button class="btn">'+(S.lit===0?ICON.road:'مساري في الأمانة: المحطة '+ar(Math.min(S.station+1,7))+' من ٧')+'</button>');g.onclick=function(){S.sTab="journey";draw()};b.appendChild(g)}
 function storeTab(b){b.appendChild(el('<div class="card" style="text-align:center"><img src="'+AV[S.wear]+'" alt="شخصيتي" style="width:150px;height:150px"><div class="count" style="justify-content:center"><span class="lab">جواهري</span><span class="n" style="margin:0">'+ar(S.gems)+'</span></div></div>'));
@@ -577,6 +623,8 @@ function teamTab(b){var add=fahdObs().length,max=150;HOUSES.slice().map(function
 function level(){var d=Object.keys(S.done).length;return d>=7?5:d>=5?4:d>=4?3:d>=2?2:d>=1?1:0}
 function meTab(b){var lv=level();b.appendChild(el('<div class="card" style="display:flex;gap:10px;align-items:center"><img src="'+AV[S.wear]+'" alt="" style="width:92px;height:92px"><div><div style="font:800 22px var(--display)">فهد أحمد</div><div class="count"><span class="lab">أختامي</span><span class="n" style="margin:0">'+ar(S.stamps[0])+'</span><span class="lab" style="margin-inline-start:10px">جواهري</span><span class="n" style="margin:0">'+ar(S.gems)+'</span></div></div></div>'));
  b.appendChild(el('<div class="card"><div class="lab">شاراتي</div><div class="badges"><span class="bdg'+(S.journeyDone?' on pop-in':'')+'">'+(S.journeyDone?ICON.check:ICON.lock)+'الأمين</span><span class="bdg">'+ICON.lock+'المتعاون</span><span class="bdg">'+ICON.lock+'النظيف</span></div></div>'));
+ b.appendChild(el('<div class="card"><div class="lab">ملصقاتي · '+ar(S.stickers.length)+' من ٧</div><div class="album">'+STK.map(function(sv,i){return '<span class="'+(S.stickers.indexOf(i)>=0?'on':'')+'">'+(S.stickers.indexOf(i)>=0?sv:'')+'</span>'}).join("")+'</div></div>'));
+ b.appendChild(el('<div class="card"><div class="lab">حكاية نُغَير</div><div class="eps">'+EPIS.map(function(t,i){var on=S.stickers.indexOf(i)>=0;return '<div class="'+(on?'on':'')+'"><b>'+ar(i+1)+'</b>'+(on?'<span>'+t+'</span>':'<span>'+ICON.lock+'</span>')+'</div>'}).join("")+'</div></div>'));
  b.appendChild(el('<div class="card"><div class="lab">مستواي في الأمانة</div><div class="lvls">'+LEVELS.map(function(n,i){return '<div class="lvl'+(i<lv?' on':'')+(i===lv?' cur':'')+'"><span>'+(i<lv?ICON.check:ar(i+1))+'</span>'+n+'</div>'}).join("")+'</div></div>'))}
 
 /* ============ الطريق والأنشطة ============ */
@@ -594,7 +642,7 @@ function road(){var r=el('<div class="road"></div>');
    anim(a.querySelector(".node"),[{transform:"scale(.4)"},{transform:"scale(1.25)"},{transform:"scale(1)"}],{duration:520,easing:"ease-out"});
    anim(b2.querySelector(".go"),[{transform:"scale(0)"},{transform:"scale(1)"}],{duration:380,delay:820,easing:"cubic-bezier(.3,1.7,.5,1)",fill:"backwards"})});
  return r}
-function finish(){var i=S.act.st;S.done[i]=1;S.station=i+1;S.act=null;if(i===6){S.journeyDone=true;S.gems+=5;S.cert={fresh:true}}draw()}
+function finish(){var i=S.act.st;S.done[i]=1;S.station=i+1;S.act=null;S.stickers.push(i);S.episode={n:i,fresh:true};if(i===3&&!S.homeQ)S.homeQ=1;if(i===6){S.journeyDone=true;S.gems+=5;S.pendingCert=true}draw()}
 function mentorSay(t,img){return el('<div class="mentor"><img src="'+(img||NUG.think)+'" alt="نُغَير">'+(S.lit===0?'<button class="spk say big" data-say="'+esc(t)+'" aria-label="استمع">'+ICON.spk+'</button>':'<div class="bubble c1" style="font-size:16.5px">'+t+'</div>')+'</div>')}
 function nextBtn(label,fn){var x=el('<button class="btn">'+(S.lit===0?ICON.arrow:label)+'</button>');x.onclick=fn;return x}
 function activity(){var a=S.act,st=a.st,L=S.lit,w=el('<div style="display:flex;flex-direction:column;gap:10px;flex:1"></div>');
@@ -703,7 +751,13 @@ function principalDesk(){
  '<div style="display:flex;flex-direction:column;gap:12px"><div class="card navy"><div class="lab">رصدات اليوم في المدرسة</div><div class="kpi" id="kpi">'+ar(total())+'</div></div><div class="card sun"><div class="lab">قيمة الشهر</div><div style="font:800 30px/1.2 var(--display)">الأمانة</div><div style="font-weight:700">'+ar(212+(S.journeyDone?1:0))+' طالبًا أتمّ مسارها</div></div></div>'+
  '<div class="card" style="display:flex;gap:14px;align-items:center">'+ringSvg(318,450)+'<div><div class="lab">طلاب رُصدت لهم ممارسة هذا الشهر</div><div style="font:800 26px var(--display)">'+ar(318)+' من '+ar(450)+'</div><div class="lab" style="margin-top:8px">معلمون رصدوا هذا الأسبوع</div><div style="font:800 22px var(--display)">'+ar(14)+' من '+ar(20)+'</div></div></div>'+
  '<div class="card"><div class="lab">الفصول: كم طالبًا رُصدت له ممارسة</div>'+CLASSES.map(function(c,i){return '<div class="cls"><b>'+c[0]+'</b><span class="trk"><span class="bar-fill" style="display:block;width:'+Math.round(c[1]/c[2]*100)+'%;animation-delay:'+(i*0.08)+'s'+(c[1]/c[2]<.6?';background:var(--coral)':'')+'"></span></span><span>'+ar(c[1])+' من '+ar(c[2])+'</span></div>'}).join("")+'</div>'+
+ '<div class="wide" id="deep" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px"></div>'+
  '<div class="card wide"><div style="font:800 20px var(--display);margin-bottom:8px">يحتاج قرارك</div><div id="alerts" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px"></div></div><div class="wide" id="paperhost"></div></div></div>');
+ var dp=d.querySelector("#deep"),sc=S.indc.map(function(v,i){return v+[96,71,58,12,64,33,81,9][i]});
+ dp.appendChild(indMap(sc,"خريطة مؤشرات الأمانة في المدرسة"));
+ dp.appendChild(el('<div class="card"><div class="lab">مسار الأمانة: أين يتوقف الطلاب</div>'+FUNNEL.map(function(v,i){var vv=v+(i===6&&S.journeyDone?1:0);return '<div class="imap"><b>'+ar(i+1)+'</b><span>'+STATIONS[i].r+'</span><span class="trk"><span class="bar-fill" style="display:block;width:'+Math.round(vv/450*100)+'%;animation-delay:'+(i*0.05)+'s'+(i===4?';background:var(--coral)':'')+'"></span></span><span class="v">'+ar(vv)+'</span></div>'}).join("")+'</div>'));
+ dp.appendChild(el('<div class="card"><div class="lab">المعرفة والسلوك</div><div class="gap2"><div><b>'+ar(38)+'</b>يجيبون صحيحًا في الأنشطة ولم تُرصد لهم ممارسة</div><div><b>'+ar(21)+'</b>رُصدت لهم ممارسات ولم يبدؤوا المسار</div></div><div class="lab" style="margin-top:10px">عدالة التوزيع</div><div class="gap2"><div><b>'+ar(6)+' من ١٠٠</b>نصيب خُمس الطلاب الأقل رصدًا من الأختام</div></div></div>'));
+ dp.appendChild(el('<div class="card"><div class="lab">قياس الأمانة قبل الشهر وبعده</div><div class="prepost"><div><span>القبلي</span><span class="trk"><span class="bar-fill" style="display:block;width:58%"></span></span><b>'+ar(430)+' طالبًا</b></div><div class="pend"><span>البعدي</span><span class="trk"></span><b>نهاية الشهر</b></div></div><div class="note" style="margin-top:6px">ثمانية مواقف قصيرة يجيب عنها الطالب قبل الشهر وبعده، وتُقارن النتيجتان</div></div>'));
  var al=d.querySelector("#alerts");
  if(S.honor===2){var hc=el('<div class="alert rise"><div><b>اقتراح تكريم من المشرف</b><br>أ. محمد العتيبي · الأول / أ</div><div class="acts"><button class="btn" id="hok">اعتماد التكريم</button></div></div>');hc.querySelector("#hok").onclick=function(){S.honor=3;draw()};al.appendChild(hc)}
  else if(S.honor===3)al.appendChild(el('<div class="alert"><div><b>اعتُمد تكريم أ. محمد العتيبي</b><br>يُسلَّم في حفل نهاية الفصل</div></div>'));
@@ -744,7 +798,10 @@ function parentPhone(){var fo=fahdObs(),dn=Object.keys(S.done).length;
   else b.appendChild(el('<div class="card today"><div class="stamp empty"></div><div><div style="font-weight:700">لم تصل بطاقة بعد</div><div class="note">تصلكم حين يتمّ فهد مسار الأمانة</div></div></div>'));
   if(S.journeyDone){var sv=el('<button class="btn">حفظ صورة ومشاركة</button>');b.appendChild(sv)}}
  else{
-  if(!fo.length)b.appendChild(el('<div class="card today"><div class="stamp empty"></div><div><div style="font-weight:700">لم تصل رصدة بعد</div><div class="note">حين يرى معلّمه ممارسة تظهر هنا بمكانها</div></div></div>'));
+  if(S.homeQ===1){var hq=el('<div class="card hq rise"><span class="q2">'+ICON.hand+'</span><div style="flex:1;min-width:0"><div class="lab">مهمة فهد في البيت هذا الأسبوع</div><div style="font-weight:700">'+HOMEQ.plain+'</div><button class="btn" id="hqok" style="margin-top:8px;padding:8px 12px">رأيتُه يفعلها</button></div></div>');
+   hq.querySelector("#hqok").onclick=function(){S.homeQ=2;S.stamps[0]++;S.gems++;S.indc[2]++;checkGoal();S.celebrate={ts:HOMEQ.ts,ph:HOMEQ.ph[S.lit],quest:false,fresh:true};draw()};b.appendChild(hq)}
+  else if(S.homeQ===2)b.appendChild(el('<div class="card hq done"><span class="q2">'+ICON.check+'</span><div><div class="lab">مهمة البيت · شهدتم بها</div><div style="font-weight:700">'+HOMEQ.plain+'</div><div class="note">وصل الختم إلى فهد</div></div></div>'));
+  if(!fo.length&&!S.homeQ)b.appendChild(el('<div class="card today"><div class="stamp empty"></div><div><div style="font-weight:700">لم تصل رصدة بعد</div><div class="note">حين يرى معلّمه ممارسة تظهر هنا بمكانها</div></div></div>'));
   fo.slice().reverse().slice(0,3).forEach(function(o,i){var pl=ALLPLACES.filter(function(x){return x.k===o.place})[0];var c=el('<div class="card'+(i===0?' rise':'')+'" style="padding:0;overflow:hidden"><div style="background:'+pl.c+(pl.dark?';color:#fff':'')+';padding:5px 12px;font-size:12.5px;font-weight:700;display:flex;justify-content:space-between"><span>'+pl.n+'</span><span>معلّمه</span></div><div style="padding:10px 12px;display:flex;gap:10px;align-items:center"><span class="stamp sm" style="width:40px;height:40px"></span><div style="flex:1"><div style="font-weight:700">'+esc(o.pr.t)+'</div><div class="note">الأمانة</div></div>'+(i===0?'<button class="link" id="rv">طلب مراجعة</button>':'')+'</div></div>');
    var rv=c.querySelector("#rv");if(rv)rv.onclick=function(){S.review=true;draw()};b.appendChild(c)});
   if(S.review)b.appendChild(el('<div class="fb rise" style="font-size:14px">وصل طلب المراجعة إلى المشرف. يُوثَّق ويصلكم الرد هنا.</div>'));
@@ -761,7 +818,8 @@ var PLAN=[
   ["المنسّق","يستورد الطلاب والمعلمين من ملف نور","٢٠ دقيقة، مرة واحدة",function(){go("setup",function(){S.setup.step=0})}],
   ["المدير والمنسّق","يختاران قيمة الشهر، وتأتي بمحتواها جاهزًا","١٠ دقائق",function(){go("setup",function(){S.setup.step=1})}],
   ["المنسّق","يفعّل أماكن الرصد في المدرسة","٥ دقائق",function(){go("setup",function(){S.setup.step=2})}],
-  ["المنسّق","يطبع بطاقات الدخول ولوحات المواقع","١٥ دقيقة",function(){go("setup",function(){S.setup.step=3})}]]},
+  ["المنسّق","يطبع بطاقات الدخول ولوحات المواقع","١٥ دقيقة",function(){go("setup",function(){S.setup.step=3})}],
+  ["المرشد","يُجري القياس القبلي القصير للقيمة","حصة واحدة",function(){go("principal")}]]},
  {ph:"الانطلاق",when:"الأسبوع الأول",c:"var(--grass)",steps:[
   ["الطالب","يدخل ببطاقته ويتعرّف على مكانه","دقيقة",function(){go("student",function(){S.logged=false;S.loginN=0;S.sTab="home"})}],
   ["الطالب","يبدأ مساره: قصة ثم بطاقة تعريف","٣ دقائق",function(){go("student",function(){preDone(0)})}],
@@ -769,13 +827,14 @@ var PLAN=[
  {ph:"الممارسة",when:"الأسبوعان الثاني والثالث",c:"var(--sky)",steps:[
   ["الطالب","يميّز الأمانة من الصدق، كلٌّ بحسب مستوى قراءته","٤ دقائق",function(){go("student",function(){preDone(2)})}],
   ["الطالب والمعلم","مهمة واقعية في الفناء يغلقها رصد المعلم","في يومه الدراسي",function(){go("student",function(){preDone(4);S.questOpen=false;S.questDone=false})}],
-  ["ولي الأمر","يتابع ما رُصد ويُشيد من البيت","دقيقة في اليوم",function(){go("parent",function(){S.pTab="today"})}],
+  ["ولي الأمر","يتابع ما رُصد، ويشهد لمهمة البيت، ويُشيد","دقيقة في اليوم",function(){go("parent",function(){S.pTab="today";if(!S.homeQ)S.homeQ=1})}],
   ["المرشد","يتابع الملاحظات النمائية بسرّية","١٥ دقيقة في الأسبوع",function(){go("counselor")}],
   ["المشرف","يعتمد بلاغات الأسر وينبّه لمن لم يُرصد له","١٠ دقائق في الأسبوع",function(){go("super")}]]},
  {ph:"الحصاد",when:"الأسبوع الرابع",c:"var(--coral)",steps:[
   ["الطالب","يتمّ المسار وينال شهادته وشارته","دقيقتان",function(){go("student",function(){preDone(6);S.days=true})}],
   ["ولي الأمر","تصله بطاقة شكر من المدرسة","—",function(){go("parent",function(){S.journeyDone=true;S.done={0:1,1:1,2:1,3:1,4:1,5:1,6:1};S.pTab="card"})}],
   ["المشرف والمدير","تقدير المعلمين بالأثر، واقتراح التكريم واعتماده","٢٠ دقيقة في الشهر",function(){go("super")}],
+  ["المرشد","القياس البعدي ومقارنته بالقبلي","حصة واحدة",function(){go("principal")}],
   ["المدير","تقرير الشهر جاهز للإشراف وأولياء الأمور","ضغطة",function(){go("principal",function(){S.report=true})}]]},
  {ph:"الاستمرار",when:"كل شهر",c:"var(--purple)",steps:[
   ["مدير المجمع","يقارن الجهات ويدخل أي مدرسة منها","نظرة أسبوعية",function(){go("network")}]]}];
@@ -832,28 +891,29 @@ if(/selftest/.test(location.search)){try{
  var q=function(x){return document.querySelector(x)},qa=function(x){return document.querySelectorAll(x)},
   byT=function(re,sel){var r=[].filter.call(qa(sel||"button"),function(b){return re.test(b.textContent)})[0];if(!r)throw "no button "+re;return r},
   role=function(k){qa(".role")[ROLES.map(function(r){return r[0]}).indexOf(k)].click()};
- fresh();draw();if(qa(".ecard").length!==8)throw "landing "+qa(".ecard").length;q("#cta").click();if(qa(".stp").length!==17)throw "plan "+qa(".stp").length;
+ fresh();draw();if(qa(".ecard").length!==8)throw "landing "+qa(".ecard").length;q("#cta").click();if(qa(".stp").length!==19)throw "plan "+qa(".stp").length;
  role("setup");byT(/استورد/).click();if(!S.setup.imported)throw "import";byT(/^التالي$/).click();byT(/^التالي$/).click();byT(/المختبر/,".ptog button").click();if(!S.places.LAB)throw "place";byT(/^التالي$/).click();byT(/اطبع/).click();if(!q(".paper"))throw "print";
- role("live");if(!byT(/المختبر/,".chip"))throw "lab chip";qa(".stu")[0].click();qa(".stu")[1].click();qa(".prac")[0].click();if(!q(".overlay"))throw "celebrate";q("#okc").click();
+ role("live");if(!byT(/المختبر/,".chip"))throw "lab chip";if(!q(".goal"))throw "goal bar";qa(".stu")[0].click();qa(".stu")[1].click();qa(".prac")[0].click();if(!q(".overlay"))throw "celebrate";q("#okc").click();
  qa(".stu")[3].click();q("#devbtn").click();q("#sv").click();if(S.devNotes.length!==3)throw "devnote";
  q("#net").click();qa(".stu")[0].click();qa(".prac")[1].click();if(S.queue.length!==1||q(".overlay"))throw "offline";q("#net").click();if(S.queue.length||!q(".overlay"))throw "flush";q("#okc").click();
- byT(/مؤشري/,".seg3 button").click();if(qa(".mi").length!==5)throw "my index";byT(/تقرير فصلي/,".seg3 button").click();if(qa(".rrow").length!==12)throw "report";
+ byT(/مؤشري/,".seg3 button").click();if(qa(".mi").length!==5)throw "my index";byT(/تقرير فصلي/,".seg3 button").click();if(qa(".rrow").length!==12)throw "report";if(qa(".imap").length!==8)throw "ind map";
  role("student");if(!q(".scan"))throw "login";q(".scan").click();q("#yes").click();if(!S.logged)throw "logged";
- qa(".snav button")[1].click();q(".go").click();for(var i=0;i<5;i++)byT(/التالي/).click();qa(".faces button")[0].click();byT(/أنهيت/).click();
- q(".go").click();byT(/فهمت/).click();
- q(".go").click();for(i=0;i<4;i++){qa(".bk button")[SORT5.items[i].b].click();byT(/التالي|أنهيت/).click()}
- q(".go").click();qa(".opt")[0].click();byT(/أنهيت/).click();
+ var ep=function(){if(!q(".stkbig"))throw "no episode";q("#okc").click()};
+ qa(".snav button")[1].click();q(".go").click();for(var i=0;i<5;i++)byT(/التالي/).click();qa(".faces button")[0].click();byT(/أنهيت/).click();ep();
+ q(".go").click();byT(/فهمت/).click();ep();
+ q(".go").click();for(i=0;i<4;i++){qa(".bk button")[SORT5.items[i].b].click();byT(/التالي|أنهيت/).click()}ep();
+ q(".go").click();qa(".opt")[0].click();byT(/أنهيت/).click();ep();if(S.homeQ!==1)throw "home quest";
  q(".go").click();byT(/قبلتُ المهمة/).click();q(".go").click();byT(/جوال المعلم/).click();if(S.view!=="live")throw "to teacher";
  qa(".prac")[0].click();if(!S.questDone)throw "quest";q("#okc").click();
- role("student");qa(".snav button")[1].click();if(q(".go"))throw "gate";byT(/تقديم/).click();q(".go").click();qa(".pics button")[0].click();byT(/أنهيت/).click();
- q(".go").click();qa(".tf button")[1].click();byT(/أنهيت/).click();if(!S.journeyDone||!q(".cert"))throw "cert";q("#okc").click();if(!q(".bdg.on"))throw "badge";
+ role("student");qa(".snav button")[1].click();if(q(".go"))throw "gate";byT(/تقديم/).click();q(".go").click();qa(".pics button")[0].click();byT(/أنهيت/).click();ep();
+ q(".go").click();qa(".tf button")[1].click();byT(/أنهيت/).click();ep();if(!S.journeyDone||!q(".cert"))throw "cert";if(S.stickers.length!==7)throw "stickers "+S.stickers.length;q("#okc").click();if(!q(".bdg.on"))throw "badge";
  qa(".snav button")[2].click();qa(".shop .item")[0].click();if(S.wear!=="cap")throw "store";qa(".snav button")[3].click();if(qa(".house").length!==4)throw "team";
  byT(/غير قارئ/,".side button").click();qa(".snav button")[1].click();S.act={st:2,i:0,ans:null};draw();if(!q(".tf"))throw "L0 tf";S.act={st:3,i:0,ans:null};draw();if(qa(".pics button").length!==2)throw "L0 branch";
  byT(/مستقل/,".side button").click();S.act={st:2,i:0,ans:null};draw();if(qa(".bk button").length!==3)throw "L2 sort";S.act=null;byT(/مبتدئ/,".side button").click();
- role("parent");byT(/بطاقة الشكر/,".seg3 button").click();if(!q(".tcard"))throw "thank card";byT(/الأسبوع/,".seg3 button").click();byT(/اليوم/,".seg3 button").click();q("#rv").click();qa(".opt")[1].click();byT(/أرسل/).click();
+ role("parent");byT(/رأيتُه/).click();if(S.homeQ!==2||!S.celebrate)throw "home close";S.celebrate=null;byT(/بطاقة الشكر/,".seg3 button").click();if(!q(".tcard"))throw "thank card";byT(/الأسبوع/,".seg3 button").click();byT(/اليوم/,".seg3 button").click();q("#rv").click();qa(".opt")[1].click();byT(/أرسل/).click();
  role("counselor");if(qa("#cb .card").length!==3)throw "notes";byT(/لقاء/).click();
  role("super");byT(/^اعتماد$/).click();byT(/نبّه/).click();byT(/اقتراح/).click();byT(/رفع/).click();
- role("principal");byT(/اعتماد التكريم/).click();if(!q(".paper"))throw "certificate";byT(/تقرير/).click();if(qa(".paper").length<2)throw "report";
+ role("principal");if(qa("#deep .card").length!==4)throw "deep "+qa("#deep .card").length;byT(/اعتماد التكريم/).click();if(!q(".paper"))throw "certificate";byT(/تقرير/).click();if(qa(".paper").length<2)throw "report";
  role("network");if(qa(".ent").length!==3)throw "ents";byT(/ادخل المدرسة/).click();if(S.view!=="principal")throw "drill";
  role("scenario");var sb=qa(".stp .btn");for(i=0;i<sb.length;i++){role("scenario");qa(".stp .btn")[i].click();if(S.view==="scenario")throw "step "+i}
  document.title="SELFTEST OK total="+total()+" stamps="+S.stamps[0]+" gems="+S.gems+" notes="+S.devNotes.length+" honor="+S.honor+" seen="+Object.keys(S.seen).length;
